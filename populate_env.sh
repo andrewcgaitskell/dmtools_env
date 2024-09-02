@@ -18,14 +18,15 @@ fi
 # Fetch and write secrets to the .env file
 for SECRET in "${SECRET_NAMES[@]}"; do
     # Fetch secret value from GitHub API
-    SECRET_VALUE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "$SECRET_API_URL/$SECRET" | jq -r .value)
+    SECRET_VALUE=$(curl -s  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer $GITHUB_TOKEN" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \ "$SECRET_API_URL/$SECRET" | jq -r .value)
 
-    # Check if the secret was fetched successfully
-    if [ "$SECRET_VALUE" == "null" ]; then
-        echo "Warning: Secret '$SECRET' not found or could not be fetched."
-    else
-        echo "$SECRET=$SECRET_VALUE" >> $ENV_FILE
-    fi
+# Check if the secret was fetched successfully
+if [ "$SECRET_VALUE" == "null" ]; then
+  echo "Warning: Secret '$SECRET' not found or could not be fetched."
+else
+  echo "$SECRET=$SECRET_VALUE" >> $ENV_FILE
+fi
 done
-
 echo ".env file populated successfully."
