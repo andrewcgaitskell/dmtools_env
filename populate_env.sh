@@ -1,7 +1,7 @@
 #!/bin/bash
     
 # Configuration
-REPO="BrownParticleAstro/dmtools"  # Replace with your repository
+REPO="andrewcgaitskell/dmtools_env"  # Replace with your repository
 SECRET_API_URL="https://api.github.com/repos/$REPO/actions/secrets"
 SECRET_NAMES=("DMTOOLS_TEST_SECRET" "ANOTHER_SECRET")  # Add other secret names here
 ENV_FILE="/opt/dmtools/code/.env_test"
