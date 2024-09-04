@@ -47,5 +47,6 @@ podman create \
 --user $uid:$gid \
 --log-opt max-size=10mb \
 #-v /opt/dmtools/code/dmtools/basecode:/workdir:Z \
--v /opt/dmtools/code/env:/workdir:Z \
+#-v /opt/dmtools/code/env:/workdir:Z \
+-v /home/home_user/code/env:/workdir:Z \
 localhost/env_stage_1:latest
