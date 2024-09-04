@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM debian:latest
 
 # Define build arguments
 ARG BUILD_ENV_USER_USERNAME
