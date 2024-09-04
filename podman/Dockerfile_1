@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Add a non-root user to run the GitHub Actions runner
-RUN useradd -m runner
+RUN useradd -m -d /home/runner runner
 
 RUN ls -al /home/runner/*.*
 
