@@ -1,10 +1,13 @@
+# Use Ubuntu as the base image
 FROM ubuntu:latest
 
+# Define build arguments
 ARG BUILD_ENV_USERNAME
 ARG BUILD_ENV_UID
 ARG BUILD_ENV_USER_GID 
 ARG BUILD_ENV_USER_GROUPNAME
 
+# Set environment variables based on arguments
 ENV ENV_USERNAME=$BUILD_ENV_USERNAME
 ENV ENV_USER_UID=$BUILD_ENV_UID
 ENV ENV_USER_GID=$BUILD_ENV_USER_GID 
@@ -21,48 +24,43 @@ RUN apt-get update && apt-get install -y \
     passwd \
     && rm -rf /var/lib/apt/lists/*
 
+# Upgrade packages
 RUN apt-get upgrade -y
 
-# Create a folder
-RUN mkdir actions-runner && cd actions-runner
+# Set the working directory
+WORKDIR /actions-runner
+
 # Download the latest runner package
 RUN curl -o actions-runner-linux-x64-2.319.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.319.1/actions-runner-linux-x64-2.319.1.tar.gz
+
 # Optional: Validate the hash
 RUN echo "3f6efb7488a183e291fc2c62876e14c9ee732864173734facc85a1bfb1744464  actions-runner-linux-x64-2.319.1.tar.gz" | shasum -a 256 -c
+
 # Extract the installer
 RUN tar xzf ./actions-runner-linux-x64-2.319.1.tar.gz
 
-# Create the runner and start the configuration experience
-# RUN ./config.sh --url https://github.com/andrewcgaitskell/dmtools_env --token ACJNZD2NOM6G4UGJ7ZG5LILG3AYE2
-# Last step, run it!
-# RUN ./run.sh
+# Create group and user using environment variables
+RUN groupadd --gid ${ENV_USER_GID} ${ENV_USER_GROUPNAME} && \
+    useradd --uid ${ENV_USER_UID} --gid ${ENV_USER_GID} -m ${ENV_USERNAME}
 
-WORKDIR /actions-runner
+# Set permissions for the working directory
+RUN chown -R ${ENV_USER_UID}:${ENV_USER_GID} /actions-runner
 
-# RUN echo groupadd --gid ${ENV_USER_GID} ${ENV_USER_GROUPNAME}
-RUN groupadd --gid ${ENV_USER_GID} ${ENV_USER_GROUPNAME}
-# RUN echo useradd --uid ${ENV_USER_UID} --gid ${ENV_USER_GID} -m ${ENV_USERNAME}
-RUN useradd --uid ${ENV_USER_UID} --gid ${ENV_USER_GID} -m ${ENV_USERNAME}
-
-RUN chown -R ${ENV_USER_UID}:${ENV_USER_GID} /workdir
-
-# Create a user for the GitHub runner
-# RUN useradd -m runner && echo "runner ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-# Switch to the runner user
+# Switch to the new user
 USER ${ENV_USER_UID}:${ENV_USER_GID}
-WORKDIR /workdir
 
-# Set environment variables
+# Set environment variables for the runner
 ENV RUNNER_NAME="podman-runner"
-## ENV RUNNER_WORKDIR="_work"
 ENV RUNNER_WORKDIR="_work"
 
+# Create a work directory
+WORKDIR /workdir
+
 # Copy entrypoint script
-COPY entry_point.sh .
+COPY entry_point.sh /actions-runner/entry_point.sh
 
 # Make the entrypoint script executable
-RUN chmod +x entry_point.sh
+RUN chmod +x /actions-runner/entry_point.sh
 
 # Set the entrypoint to the script
-ENTRYPOINT ["./entry_point.sh"]
+ENTRYPOINT ["/actions-runner/entry_point.sh"]
