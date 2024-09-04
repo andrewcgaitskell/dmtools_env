@@ -16,8 +16,11 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Add a non-root user to run the GitHub Actions runner
-RUN useradd -m -s /bin/bash runner \
-    && echo "runner ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+RUN useradd -m runner
+
+RUN ls -al /home/runner/*.*
+
+WORKDIR /home/runner
 
 # Download and install the GitHub Actions runner
 RUN curl -o actions-runner-linux-x64-2.319.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.319.1/actions-runner-linux-x64-2.319.1.tar.gz \
@@ -28,16 +31,18 @@ RUN curl -o actions-runner-linux-x64-2.319.1.tar.gz -L https://github.com/action
 
 COPY entry_point.sh /home/runner/entry_point.sh
 
-RUN /bin/bash -c "chmod +x /home/runner/entry_point.sh"
+RUN ls -al /home/runner/*.*
+
+RUN chmod +x /home/runner/entry_point.sh
 
 # Switch to the runner user
-USER runner
+# USER runner
 
 # Set the working directory
-WORKDIR /home/runner
+# WORKDIR /home/runner
 
 # Set the entrypoint to the script
-ENTRYPOINT ["/home/runner/entry_point.sh"]
+ENTRYPOINT ["entry_point.sh"]
 
 # Default command to run when container starts
 CMD ["./run.sh"]
