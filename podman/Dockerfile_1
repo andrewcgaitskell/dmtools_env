@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     git \
     sudo \
     unzip \
+    passwd \
     && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get upgrade -y
@@ -35,11 +36,11 @@ RUN tar xzf ./actions-runner-linux-x64-2.319.1.tar.gz
 # Last step, run it!
 # RUN ./run.sh
 
-WORKDIR /workdir
+WORKDIR /actions-runner
 
-RUN echo groupadd --gid ${ENV_USER_GID} ${ENV_USER_GROUPNAME}
+# RUN echo groupadd --gid ${ENV_USER_GID} ${ENV_USER_GROUPNAME}
 RUN groupadd --gid ${ENV_USER_GID} ${ENV_USER_GROUPNAME}
-RUN echo useradd --uid ${ENV_USER_UID} --gid ${ENV_USER_GID} -m ${ENV_USERNAME}
+# RUN echo useradd --uid ${ENV_USER_UID} --gid ${ENV_USER_GID} -m ${ENV_USERNAME}
 RUN useradd --uid ${ENV_USER_UID} --gid ${ENV_USER_GID} -m ${ENV_USERNAME}
 
 RUN chown -R ${ENV_USER_UID}:${ENV_USER_GID} /workdir
