@@ -21,10 +21,19 @@ RUN apt-get update && apt-get install -y \
 
 RUN apt-get -y install unzip
 
-# Download and install the GitHub Actions Runner
-RUN curl -o actions-runner-linux-x64-2.300.2.tar.gz -L https://github.com/actions/runner/releases/download/v2.300.2/actions-runner-linux-x64-2.300.2.tar.gz && \
-    tar xzf actions-runner-linux-x64-2.300.2.tar.gz && \
-    rm -f actions-runner-linux-x64-2.300.2.tar.gz
+# Create a folder
+RUN mkdir actions-runner && cd actions-runner
+# Download the latest runner package
+RUN curl -o actions-runner-linux-x64-2.319.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.319.1/actions-runner-linux-x64-2.319.1.tar.gz
+# Optional: Validate the hash
+RUN echo "3f6efb7488a183e291fc2c62876e14c9ee732864173734facc85a1bfb1744464  actions-runner-linux-x64-2.319.1.tar.gz" | shasum -a 256 -c
+# Extract the installer
+RUN tar xzf ./actions-runner-linux-x64-2.319.1.tar.gz
+
+# Create the runner and start the configuration experience
+RUN ./config.sh --url https://github.com/andrewcgaitskell/dmtools_env --token ACJNZD2NOM6G4UGJ7ZG5LILG3AYE2
+# Last step, run it!
+RUN ./run.sh
 
 WORKDIR /workdir
 
