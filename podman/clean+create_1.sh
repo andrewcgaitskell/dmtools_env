@@ -17,8 +17,8 @@ subgidSize=$(( $(podman info --format "{{ range \
 podman build \
 --build-arg=BUILD_ENV_UID=${ENV_UID} \
 --build-arg=BUILD_ENV_USERNAME=${ENV_USERNAME} \
---build-arg=BUILD_ENV_GID=${ENV_GID} \
---build-arg=BUILD_ENV_GROUPNAME=${ENV_GROUPNAME} \
+--build-arg=BUILD_ENV_USER_GID=${ENV_USER_GID} \
+--build-arg=BUILD_ENV_USER_GROUPNAME=${ENV_USER_GROUPNAME} \
 --build-arg=BUILD_ENV_REPO_URL=${ENV_REPO_URL} \
 --build-arg=BUILD_ENV_RUNNER_TOKEN=${ENV_RUNNER_TOKEN} \
 -f Dockerfile_1 -t env_stage_1 .
