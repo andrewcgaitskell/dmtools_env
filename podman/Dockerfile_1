@@ -18,18 +18,20 @@ ENV ENV_USER_GROUPNAME=$BUILD_ENV_USER_GROUPNAME
 ENV ENV_REPO_URL=$BUILD_ENV_REPO_URL
 ENV ENV_RUNNER_TOKEN=$BUILD_ENV_RUNNER_TOKEN
 
+# Ensure all necessary repositories are enabled
+RUN apt-get update && apt-get install -y software-properties-common \
+    && add-apt-repository universe
+
 # Install required dependencies for adding Microsoft's package repository
-RUN apt-get update && apt-get install -y wget apt-transport-https software-properties-common gnupg
+RUN apt-get update && apt-get install -y wget apt-transport-https gnupg2
 
 # Add Microsoft's official package repository for .NET
 RUN wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb \
     && rm packages-microsoft-prod.deb
 
-# Install .NET Core 6.0 SDK and dependencies
-RUN apt-get update && apt-get install -y dotnet-sdk-6.0
-
-# Install necessary dependencies
+# Update the package list and install .NET SDK 6.0 and its dependencies
+RUN apt-get update && apt-get install -y dotnet-sdk-6.0# Install necessary dependencies
 RUN apt-get install -y \
     bash \
     curl \
