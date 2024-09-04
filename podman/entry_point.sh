@@ -4,11 +4,11 @@
 set -e
 
 # GitHub repository and token from environment variables
-REPO_URL=${REPO_URL}
-RUNNER_TOKEN=${RUNNER_TOKEN}
+REPO_URL=${ENV_REPO_URL}
+RUNNER_TOKEN=${ENV_RUNNER_TOKEN}
 
 # Configure the GitHub Actions Runner
-./config.sh --url "${REPO_URL}" --token "${RUNNER_TOKEN}" --work "${RUNNER_WORKDIR}" --unattended --replace
+./config.sh --url "${ENV_REPO_URL}" --token "${ENV_RUNNER_TOKEN}" --work "${ENV_RUNNER_WORKDIR}" --unattended --replace
 
 # Run the GitHub Actions Runner
 ./run.sh
