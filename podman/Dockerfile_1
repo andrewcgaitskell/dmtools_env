@@ -62,7 +62,7 @@ RUN chown -R ${ENV_USER_UID}:${ENV_USER_GID} /actions-runner
 USER ${ENV_USER_UID}:${ENV_USER_GID}
 
 # Set environment variables for the runner
-ENV ENV_RUNNER_NAME="podman-runner"
+ENV RUNNER_NAME="podman-runner"
 ENV ENV_RUNNER_WORKDIR="_work"
 
 # Set the entrypoint to the script
