@@ -12,6 +12,7 @@ ENV ENV_USER_GROUPNAME=$BUILD_ENV_USER_GROUPNAME
 
 # Install necessary dependencies
 RUN apt-get update && apt-get install -y \
+    bash \
     curl \
     tar \
     git \
