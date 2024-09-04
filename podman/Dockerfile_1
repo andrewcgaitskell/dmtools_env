@@ -51,7 +51,7 @@ COPY entry_point.sh /
 
 RUN chown -R runner /_work /actions-runner
 
-RUN chmod +x ./entry_point.sh
+RUN chmod +x /entry_point.sh
 
 USER runner
 
