@@ -43,6 +43,12 @@ RUN tar xzf ./actions-runner-linux-x64-2.319.1.tar.gz
 RUN groupadd --gid ${ENV_USER_GID} ${ENV_USER_GROUPNAME} && \
     useradd --uid ${ENV_USER_UID} --gid ${ENV_USER_GID} -m ${ENV_USER_USERNAME}
 
+# Copy entrypoint script
+COPY entry_point.sh /actions-runner/entry_point.sh
+
+# Make the entrypoint script executable
+RUN chmod +x /actions-runner/entry_point.sh
+
 # Set permissions for the working directory
 RUN chown -R ${ENV_USER_UID}:${ENV_USER_GID} /actions-runner
 
@@ -52,15 +58,6 @@ USER ${ENV_USER_UID}:${ENV_USER_GID}
 # Set environment variables for the runner
 ENV RUNNER_NAME="podman-runner"
 ENV RUNNER_WORKDIR="_work"
-
-# Create a work directory
-WORKDIR /workdir
-
-# Copy entrypoint script
-COPY entry_point.sh /actions-runner/entry_point.sh
-
-# Make the entrypoint script executable
-RUN chmod +x /actions-runner/entry_point.sh
 
 # Set the entrypoint to the script
 ENTRYPOINT ["/actions-runner/entry_point.sh"]
