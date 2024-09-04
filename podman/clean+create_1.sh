@@ -1,6 +1,7 @@
 podman stop container_env_1
 podman rm container_env_1
 podman rmi env_stage_1:latest
+podman pod rm pod_env
 
 uid=${ENV_USER_UID} ##1001
 gid=${ENV_USER_GID} ##1002
