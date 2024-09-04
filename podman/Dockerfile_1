@@ -31,7 +31,9 @@ RUN wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-p
     && rm packages-microsoft-prod.deb
 
 # Update the package list and install .NET SDK 6.0 and its dependencies
-RUN apt-get update && apt-get install -y dotnet-sdk-6.0# Install necessary dependencies
+RUN apt-get update && apt-get install -y dotnet-sdk-6.0
+
+# Install necessary dependencies
 RUN apt-get install -y \
     bash \
     curl \
