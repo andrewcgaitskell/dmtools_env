@@ -25,7 +25,9 @@ RUN curl -o actions-runner-linux-x64-2.319.1.tar.gz -L https://github.com/action
     && rm actions-runner-linux-x64-2.319.1.tar.gz
 
 # Copy entrypoint script (optional, if you have one)
+
 COPY entry_point.sh /home/runner/entry_point.sh
+
 RUN chmod +x /home/runner/entry_point.sh
 
 # Switch to the runner user
