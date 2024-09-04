@@ -31,9 +31,9 @@ RUN echo "3f6efb7488a183e291fc2c62876e14c9ee732864173734facc85a1bfb1744464  acti
 RUN tar xzf ./actions-runner-linux-x64-2.319.1.tar.gz
 
 # Create the runner and start the configuration experience
-RUN ./config.sh --url https://github.com/andrewcgaitskell/dmtools_env --token ACJNZD2NOM6G4UGJ7ZG5LILG3AYE2
+# RUN ./config.sh --url https://github.com/andrewcgaitskell/dmtools_env --token ACJNZD2NOM6G4UGJ7ZG5LILG3AYE2
 # Last step, run it!
-RUN ./run.sh
+# RUN ./run.sh
 
 WORKDIR /workdir
 
