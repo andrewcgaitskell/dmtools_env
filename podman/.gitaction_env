@@ -1,5 +1,5 @@
-ENV_UID=1001
-ENV_USERNAME=home_user
+ENV_USER_UID=1001
+ENV_USER_USERNAME=home_user
 ENV_USER_GID=1001
 ENV_USER_GROUPNAME=home_group
 ENV_REPO_URL=https://github.com/andrewcgaitskell/dmtools_env
