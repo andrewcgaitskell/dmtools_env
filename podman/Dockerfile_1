@@ -1,24 +1,22 @@
-# Use an official Ubuntu as the base image
-FROM ubuntu:22.04
+# Use an official Fedora as the base image
+FROM fedora:38
 
 # Install required dependencies
-RUN apt-get update && apt-get install -y \
+RUN dnf install -y \
     curl \
     tar \
     sudo \
     git \
     unzip \
     bash \
-    libssl-dev \
-    libcurl4 \
-    libicu-dev \
-    libkrb5-dev \
-    libc6 \
-    libc6-dev \
-    libgcc1 \
-    libstdc++6 \
-    && rm -rf /var/lib/apt/lists/*
-
+    openssl-devel \
+    libcurl-devel \
+    icu \
+    krb5-devel \
+    glibc \
+    libgcc \
+    libstdc++ \
+    && dnf clean all
 
 # Add a non-root user to run the GitHub Actions runner
 RUN useradd -m -d /home/runner runner
@@ -33,7 +31,6 @@ RUN curl -o actions-runner-linux-x64-2.319.1.tar.gz -L https://github.com/action
     && rm actions-runner-linux-x64-2.319.1.tar.gz
 
 # Copy entrypoint script (optional, if you have one)
-
 COPY entry_point.sh /home/runner/entry_point.sh
 
 RUN ls -al /home/runner/*.*
@@ -42,9 +39,6 @@ RUN chmod +x /home/runner/entry_point.sh
 
 # Switch to the runner user
 # USER runner
-
-# Set the working directory
-# WORKDIR /home/runner
 
 # Set the entrypoint to the script
 ENTRYPOINT ["/home/runner/entry_point.sh"]
