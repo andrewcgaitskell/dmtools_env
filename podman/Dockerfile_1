@@ -42,9 +42,15 @@ RUN ./bin/installdependencies.sh
 
 RUN mkdir /_work
 
+# Add a non-root user to run the GitHub Actions runner
+RUN useradd -m -d /home/runner runner
+
+RUN ls -al /home/runner
+
 RUN chown -R runner /_work /actions-runner
 
 COPY entry_point.sh /
+
 RUN chmod +x /entry_point.sh
 
 ENTRYPOINT ["/entry_point.sh"]
