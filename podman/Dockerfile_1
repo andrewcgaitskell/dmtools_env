@@ -37,8 +37,13 @@ RUN ls -al /home/runner/*.*
 
 RUN chmod +x /home/runner/entry_point.sh
 
+RUN chmod +x /home/runner/run.sh
+
+# Set permissions for the working directory
+RUN chown -R runner /home/runner
+
 # Switch to the runner user
-# USER runner
+USER runner
 
 # Set the entrypoint to the script
 ENTRYPOINT ["/home/runner/entry_point.sh"]
