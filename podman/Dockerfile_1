@@ -36,21 +36,22 @@ RUN useradd --uid ${ENV_USER_UID} --gid ${ENV_USER_GID} -m ${ENV_USERNAME}
 RUN chown -R ${ENV_USER_UID}:${ENV_USER_GID} /workdir
 
 # Create a user for the GitHub runner
-RUN useradd -m runner && echo "runner ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+# RUN useradd -m runner && echo "runner ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Switch to the runner user
 USER ${ENV_USER_UID}:${ENV_USER_GID}
-WORKDIR /home/runner
+WORKDIR /workdir
 
 # Set environment variables
 ENV RUNNER_NAME="podman-runner"
+## ENV RUNNER_WORKDIR="_work"
 ENV RUNNER_WORKDIR="_work"
 
 # Copy entrypoint script
-COPY entrypoint.sh .
+COPY entry_point.sh .
 
 # Make the entrypoint script executable
-RUN chmod +x entrypoint.sh
+RUN chmod +x entry_point.sh
 
 # Set the entrypoint to the script
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["./entry_point.sh"]
