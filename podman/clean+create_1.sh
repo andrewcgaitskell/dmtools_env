@@ -7,16 +7,10 @@ subuidSize=$(( $(podman info --format "{{ range \
 subgidSize=$(( $(podman info --format "{{ range \
    .Host.IDMappings.GIDMap }}+{{.Size }}{{end }}" ) - 1 ))
 
-#podman build \
-#--build-arg=BUILD_ENV_UID=${ENV_UID} \
-#--build-arg=BUILD_ENV_USERNAME=${ENV_USERNAME} \
-#--build-arg=BUILD_ENV_GID=${ENV_GID} \
-#--build-arg=BUILD_ENV_GROUPNAME=${ENV_GROUPNAME} \
-#-f Dockerfile_1 -t flask_application_stage_1 .
 
 podman build \
---build-arg=BUILD_ENV_UID=${ENV_UID} \
---build-arg=BUILD_ENV_USERNAME=${ENV_USERNAME} \
+--build-arg=BUILD_ENV_UID=${ENV_USER_UID} \
+--build-arg=BUILD_ENV_USERNAME=${ENV_USER_USERNAME} \
 --build-arg=BUILD_ENV_USER_GID=${ENV_USER_GID} \
 --build-arg=BUILD_ENV_USER_GROUPNAME=${ENV_USER_GROUPNAME} \
 --build-arg=BUILD_ENV_REPO_URL=${ENV_REPO_URL} \
