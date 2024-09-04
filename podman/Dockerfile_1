@@ -42,7 +42,7 @@ RUN chmod +x /home/runner/entry_point.sh
 # WORKDIR /home/runner
 
 # Set the entrypoint to the script
-ENTRYPOINT ["entry_point.sh"]
+ENTRYPOINT ["/home/runner/entry_point.sh"]
 
 # Default command to run when container starts
-CMD ["./run.sh"]
+CMD ["/home/runner/run.sh"]
