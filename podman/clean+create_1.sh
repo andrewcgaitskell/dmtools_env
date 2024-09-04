@@ -9,8 +9,8 @@ subgidSize=$(( $(podman info --format "{{ range \
 
 
 podman build \
---build-arg=BUILD_ENV_UID=${ENV_USER_UID} \
---build-arg=BUILD_ENV_USERNAME=${ENV_USER_USERNAME} \
+--build-arg=BUILD_ENV_USER_UID=${ENV_USER_UID} \
+--build-arg=BUILD_ENV_USER_USERNAME=${ENV_USER_USERNAME} \
 --build-arg=BUILD_ENV_USER_GID=${ENV_USER_GID} \
 --build-arg=BUILD_ENV_USER_GROUPNAME=${ENV_USER_GROUPNAME} \
 --build-arg=BUILD_ENV_REPO_URL=${ENV_REPO_URL} \
