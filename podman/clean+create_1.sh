@@ -2,6 +2,9 @@ podman stop container_env_1
 podman rm container_env_1
 podman rmi env_stage_1:latest
 
+uid=${ENV_USER_UID} ##1001
+gid=${ENV_USER_GID} ##1002
+
 subuidSize=$(( $(podman info --format "{{ range \
    .Host.IDMappings.UIDMap }}+{{.Size }}{{end }}" ) - 1 ))
 subgidSize=$(( $(podman info --format "{{ range \
