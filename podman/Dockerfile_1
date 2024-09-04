@@ -47,11 +47,13 @@ RUN useradd -m -d /home/runner runner
 
 RUN ls -al /home/runner
 
-RUN chown -R runner /_work /actions-runner
-
 COPY entry_point.sh /
 
-RUN chmod +x /entry_point.sh
+RUN chown -R runner /_work /actions-runner
 
-ENTRYPOINT ["/entry_point.sh"]
-CMD ["./run.py"]
+RUN chmod +x ./entry_point.sh
+
+USER runner
+
+ENTRYPOINT ["/actions-runner/entry_point.sh"]
+CMD ["/actions-runner/run.py"]
