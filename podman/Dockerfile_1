@@ -16,10 +16,10 @@ RUN apt-get update && apt-get install -y \
     tar \
     git \
     sudo \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
-
-RUN apt-get -y install unzip
+RUN apt-get upgrade -y
 
 # Create a folder
 RUN mkdir actions-runner && cd actions-runner
