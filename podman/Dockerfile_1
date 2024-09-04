@@ -55,5 +55,5 @@ RUN chmod +x /entry_point.sh
 
 USER runner
 
-ENTRYPOINT ["/actions-runner/entry_point.sh"]
-CMD ["/actions-runner/run.py"]
+ENTRYPOINT ["/entry_point.sh"]
+CMD ["/run.py"]
